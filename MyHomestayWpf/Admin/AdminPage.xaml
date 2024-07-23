@@ -1,0 +1,17 @@
+﻿<Window x:Class="MyHomestayWpf.AdminPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="AdminPage" Height="450" Width="800">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="hotels.jpg"/>
+        </Grid.Background>
+        <Button Content="Booking List" HorizontalAlignment="Left" Margin="69,150,0,0" VerticalAlignment="Top" Height="71" Width="148" FontSize="18" BorderBrush="#FF332323" BorderThickness="5,5,5,5" FontFamily="Tahoma" Foreground="#FF412B2B" Click="BookingList_Click"/>
+        <Button Content="User List" HorizontalAlignment="Center" Margin="0,150,0,0" VerticalAlignment="Top" Height="71" Width="148" FontSize="18" BorderBrush="#FF332323" BorderThickness="5,5,5,5" FontFamily="Tahoma" Foreground="#FF412B2B" Click="UserList_Click" RenderTransformOrigin="0.501,0.755"/>
+        <Button Content="Room List" HorizontalAlignment="Left" Margin="578,150,0,0" VerticalAlignment="Top" Height="71" Width="148" FontSize="18" BorderBrush="#FF332323" BorderThickness="5,5,5,5" FontFamily="Tahoma" Foreground="#FF412B2B" Click="RoomList_Click"/>
+        <Button Content="Logout" HorizontalAlignment="Right" Margin="0,20,20,0" VerticalAlignment="Top" Height="48" Width="108" FontSize="18" BorderBrush="#FF332323" BorderThickness="5,5,5,5" FontFamily="Trebuchet MS" Foreground="#FFFFF8F8" Background="#FF399C65" Click="Logout_Click"/>
+    </Grid>
+</Window>

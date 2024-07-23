@@ -1,0 +1,65 @@
+﻿<Window x:Class="MyHomestayWpf.BookingList"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="BookingList" Height="573" Width="800">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Vertical" Grid.Row="0" Margin="0,0,0,10" Background="#FFC4A7D9">
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <Label Content="User ID:" Width="152"/>
+                <TextBox x:Name="UserIdTextBox" Width="273" GotFocus="RemovePlaceholderText" LostFocus="AddPlaceholderText"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <Label Content="Check-In Date:" Width="153"/>
+                <TextBox x:Name="CheckInDateTextBox" Width="272" GotFocus="RemovePlaceholderText" LostFocus="AddPlaceholderText"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <Label Content="Check-Out Date:" Width="154"/>
+                <TextBox x:Name="CheckOutDateTextBox" Width="271" GotFocus="RemovePlaceholderText" LostFocus="AddPlaceholderText"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <Label Content="Total Price:" Width="155"/>
+                <TextBox x:Name="TotalPriceTextBox" Width="271" GotFocus="RemovePlaceholderText" LostFocus="AddPlaceholderText"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <Label Content="Status:" Width="156"/>
+                <ComboBox x:Name="BookingStatusComboBox" Width="270">
+                    <ComboBoxItem Content="0"/>
+                    <ComboBoxItem Content="1"/>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5" Width="398">
+                <Button Content="Add Booking" Click="AddBooking_Click" Margin="5"/>
+                <Button Content="Update Booking" Click="UpdateBooking_Click" Margin="5"/>
+            </StackPanel>
+        </StackPanel>
+
+        <DataGrid x:Name="BookingsDataGrid" AutoGenerateColumns="False" Grid.Row="1" Margin="10,10,10,10" SelectionChanged="BookingsDataGrid_SelectionChanged" Background="#FFEDB4E5">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Booking ID" Binding="{Binding BookingId}" Width="*"/>
+                <DataGridTextColumn Header="User ID" Binding="{Binding UserId}" Width="*"/>
+                <DataGridTextColumn Header="Check-In Date" Binding="{Binding CheckInDate}" Width="*"/>
+                <DataGridTextColumn Header="Check-Out Date" Binding="{Binding CheckOutDate}" Width="*"/>
+                <DataGridTextColumn Header="Total Price" Binding="{Binding TotalPrice}" Width="*"/>
+                <DataGridTextColumn Header="Status" Binding="{Binding BookingStatus}" Width="*"/>
+                <DataGridTemplateColumn Header="Actions" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="Edit" Click="EditBooking_Click" Tag="{Binding BookingId}"/>
+                                <Button Content="Delete" Click="DeleteBooking_Click" Tag="{Binding BookingId}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button Content="Back" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,200" Click="Back_Click" Height="25" Width="49"/>
+    </Grid>
+</Window>
