@@ -44,7 +44,7 @@ namespace MyHomestayWpf
                         {
                             if (user.PasswordHash.Equals(password))
                             {
-                                MainWindow mainWindow = new MainWindow();
+                                MainWindow mainWindow = new MainWindow(user);
                                 this.Close();
                                 mainWindow.Show();
                             }

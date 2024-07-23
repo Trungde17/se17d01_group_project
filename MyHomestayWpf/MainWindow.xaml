@@ -5,8 +5,176 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyHomestayWpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="1000" Width="1200">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Background" Value="#FF2D2D30"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="10,0"/>
+        </Style>
+        <Style TargetType="DatePicker">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="10,0"/>
+        </Style>
+    </Window.Resources>
     <Grid>
+        <!-- Header -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
+        <Border Background="#FF2D2D30" Height="60" VerticalAlignment="Top">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="0">
+                    <Image Source="logo.png" Height="40" Margin="10"/>
+                    <TextBlock Text="Homestay Booking" Foreground="White" FontSize="24" FontWeight="Bold" VerticalAlignment="Center"/>
+                </StackPanel>
+                <Button Content="My Booking" VerticalAlignment="Bottom" Grid.Column="1" Margin="5,0,5,15" Click="Button_Click"/>
+                <Button Content="Account" VerticalAlignment="Center" Grid.Column="2"/>
+            </Grid>
+        </Border>
+
+        <!-- Banner with Find Room -->
+        <Grid Grid.Row="1" VerticalAlignment="Top" Margin="0,10,0,10">
+            <Image Source="banner.jpg" Stretch="Fill"/>
+            <Border Background="#AA000000" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="20" Width="800">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Check-in Date:" Foreground="White" Grid.Column="0" VerticalAlignment="Center"/>
+                    <DatePicker Name="CheckinDatePicker" Grid.Column="1" Margin="10,0"/>
+                    <TextBlock Text="Check-out Date:" Foreground="White" Grid.Column="2" VerticalAlignment="Center"/>
+                    <DatePicker Name="CheckoutDatePicker" Grid.Column="3" Margin="10,0"/>
+                    <Button Content="Search" Width="100" Click="SearchButton_Click" Grid.Column="4" Margin="10,0"/>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- Main Content -->
+        <Grid Grid.Row="2" Margin="10,0,10,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="5*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Room List -->
+            <ScrollViewer Grid.Column="0" Margin="0,0,10,0" Grid.Row="0">
+                <ListView Name="RoomListView" ItemsSource="{Binding BookingViewModel.AvailableRooms}" SelectionChanged="RoomListView_SelectionChanged">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Room Name" DisplayMemberBinding="{Binding RoomName}" Width="150"/>
+                            <GridViewColumn Header="Price Per Night" DisplayMemberBinding="{Binding PricePerNight, StringFormat=C}" Width="120"/>
+                            <GridViewColumn Header="Max Occupancy" DisplayMemberBinding="{Binding MaxOccupancy}" Width="120"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </ScrollViewer>
+
+            <!-- Room Details -->
+
+            <Border BorderBrush="Gray" Grid.Column="1" BorderThickness="1" Padding="10" Height="259" Margin="0,6,0,0" VerticalAlignment="Top">
+                <StackPanel VerticalAlignment="Top" Height="211" Margin="-1,-11,-1,0">
+                    <TextBlock Text="Room Details" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Room Name: " FontWeight="Bold" Margin="0,0,0,10"/>
+                        <TextBlock Text="{Binding BookingViewModel.SelectedRoom.RoomName}" Margin="0,0,0,10"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Description: " FontWeight="Bold" Margin="0,0,0,10"/>
+                        <TextBlock Text="{Binding BookingViewModel.SelectedRoom.Description}" Margin="0,0,0,10"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Price Per Night: " FontWeight="Bold" Margin="0,0,0,10"/>
+                        <TextBlock Text="{Binding BookingViewModel.SelectedRoom.PricePerNight, StringFormat=C}" Margin="0,0,0,10"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Max Occupancy: " FontWeight="Bold" Margin="0,0,0,10"/>
+                        <TextBlock Text="{Binding BookingViewModel.SelectedRoom.MaxOccupancy}" Margin="0,0,0,10"/>
+                    </StackPanel>
+                    <Button Content="Book Room" Width="150" Height="30" Click="BookRoomButton_Click" HorizontalAlignment="Left"/>
+                </StackPanel>
+            </Border>
+
+
+            <!-- Booking Details -->
+            <ScrollViewer Grid.Column="0" Margin="0,3,49,10" Grid.Row="1">
+                <Border BorderBrush="Gray" BorderThickness="1" Padding="10" Height="357" Width="649">
+                    <StackPanel>
+                        <TextBlock Text="Booking Details" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Customer Name: " FontWeight="Bold" Margin="0,0,0,10"/>
+                            <TextBlock Text="{Binding User.UserName}" Margin="0,0,0,10"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Phone Number: " FontWeight="Bold" Margin="0,0,0,10"/>
+                            <TextBlock Text="{Binding User.Phone}" Margin="0,0,0,10"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Booking Date: " FontWeight="Bold" Margin="0,0,0,10"/>
+                            <TextBlock Text="{Binding BookingViewModel.DatedBooking}" Margin="0,0,0,10"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Check-in Date: " FontWeight="Bold" Margin="0,0,0,10"/>
+                            <TextBlock Text="{Binding BookingViewModel.DateCheckin}" Margin="0,0,0,10"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Check-out Date: " FontWeight="Bold" Margin="0,0,0,10"/>
+                            <TextBlock Text="{Binding BookingViewModel.DateCheckout}" Margin="0,0,0,10"/>
+                        </StackPanel>
+                        <TextBlock Text="Rooms:" FontWeight="Bold" Margin="0,0,0,10"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <ComboBox x:Name="RoomComboBox" ItemsSource="{Binding BookingViewModel.Rooms}" DisplayMemberPath="RoomName" Grid.Column="0" Margin="0,0,231,0" SelectionChanged="ComboBox_SelectionChanged"/>
+                            <Button Content="Remove" Click="RemoveRoom_click" Height="31" Margin="420,5,128,0" VerticalAlignment="Top"/>
+                        </Grid>
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                            <TextBlock Text="Total Price: " FontWeight="Bold"/>
+                            <TextBlock Text="{Binding BookingViewModel.TotalAmount, StringFormat=C}" Margin="10,0,0,0"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,20,10,0">
+                            <Button Content="Confirm Booking" Background="Blue" Width="150" Height="30" Click="ConfirmBookingButton_Click" Margin="10,0"/>
+                            <Button Content="Cancel" Background="Red" Width="150" Height="30"  Margin="10,0" Click="CancelBookingButton_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </ScrollViewer>
+        </Grid>
+
+        <!-- Footer -->
+        <Border Background="#FF2D2D30" Height="80" VerticalAlignment="Bottom" Padding="10" Grid.Row="3" Grid.ColumnSpan="2">
+            <StackPanel>
+                <TextBlock Text="Contact Us" Foreground="White" FontWeight="Bold"/>
+                <TextBlock Text="Phone: 123-456-789" Foreground="White"/>
+                <TextBlock Text="Email: info@sunrisehomestay.com" Foreground="White"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>
