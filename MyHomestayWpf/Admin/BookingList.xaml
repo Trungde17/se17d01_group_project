@@ -1,0 +1,28 @@
+﻿<Window x:Class="MyHomestayWpf.BookingList"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="BookingList" Height="450" Width="800">
+    <Grid>
+        <DataGrid x:Name="BookingsDataGrid" AutoGenerateColumns="False" Height="300" Margin="10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Booking ID" Binding="{Binding BookingId}" Width="*"/>
+                <DataGridTextColumn Header="User ID" Binding="{Binding UserId}" Width="*"/>
+                <DataGridTextColumn Header="Check-In Date" Binding="{Binding CheckInDate}" Width="*"/>
+                <DataGridTextColumn Header="Check-Out Date" Binding="{Binding CheckOutDate}" Width="*"/>
+                <DataGridTextColumn Header="Total Price" Binding="{Binding TotalPrice}" Width="*"/>
+                <DataGridTextColumn Header="Status" Binding="{Binding BookingStatus}" Width="*"/>
+                <DataGridTemplateColumn Header="Actions" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="Edit" Click="EditBooking_Click" Tag="{Binding BookingId}"/>
+                                <Button Content="Delete" Click="DeleteBooking_Click" Tag="{Binding BookingId}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Back" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Click="Back_Click"/>
+    </Grid>
+</Window>
